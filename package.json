@@ -1,0 +1,61 @@
+{
+  "name": "react-pulpo",
+  "version": "1.0.4",
+  "description": "",
+  "main": "index.js",
+  "browser": "lib/index.umd.js",
+  "module": "lib/index.es.js",
+  "scripts": {
+    "test": "jest",
+    "start": "styleguidist server",
+    "build": "rollup -c",
+    "postbuild": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Jhoseph Guerrero",
+    "email": "jhosephgp@gmail.com"
+  },
+  "license": "ISC",
+  "files": [
+    "/lib",
+    "index.js"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8",
+    "@testing-library/react": "^9.4.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-styled-components": "^1.10.6",
+    "jest": "^25.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-styleguidist": "^10.6.1",
+    "rollup": "^1.29.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "styled-components": "^5.0.0",
+    "webpack": "^4.41.5"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "prop-types": "^15.7.2",
+    "styled-components": "^5.0.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  }
+}
