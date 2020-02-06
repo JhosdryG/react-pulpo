@@ -140,12 +140,13 @@ const SelectFilter = React.forwardRef(
       placeholder,
       noMatchMessage,
       style,
-      setOptions
+      setOptions,
+      disableFunc
     },
     ref
   ) => {
     // State
-    const list = useState(data)[0];
+    const [list, setList] = useState(data);
     const [currentItem, setCurrentItem] = useState(0);
     const [value, setValue] = useState('');
     const [filteredList, setFilteredList] = useState([]);
@@ -153,6 +154,18 @@ const SelectFilter = React.forwardRef(
 
     //Ref of the <ul> tag
     const listRef = useRef(null);
+
+    useEffect(() => {
+      if (disableFunc) {
+        const newData = data.map(item => ({
+          ...item,
+          disable: disableFunc(item)
+        }));
+        setList(newData);
+      } else {
+        setList(data);
+      }
+    }, [data, disableFunc]);
 
     useEffect(() => {
       if (setOptions) {
@@ -264,11 +277,14 @@ const SelectFilter = React.forwardRef(
     // This func runs when a item is selected, it sends the item object to its parent
     const handleOnSelect = i => {
       if (filteredList[i]) {
-        onSelect(filteredList[i]);
-        setValue(filteredList[i][filter]);
-        setFilteredList([]);
-        setCurrentItem(0);
-        setHasSelected(true);
+        if (!filteredList[i].disable) {
+          delete filteredList[i]['disable'];
+          onSelect(filteredList[i]);
+          setValue(filteredList[i][filter]);
+          setFilteredList([]);
+          setCurrentItem(0);
+          setHasSelected(true);
+        }
       }
     };
 
@@ -326,7 +342,8 @@ SelectFilter.propTypes = {
   placeholder: PropTypes.string,
   noMatchMessage: PropTypes.string,
   style: PropTypes.object,
-  setOptions: PropTypes.func
+  setOptions: PropTypes.func,
+  disableFunc: PropTypes.func
 };
 
 export default SelectFilter;
