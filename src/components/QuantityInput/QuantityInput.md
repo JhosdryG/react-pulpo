@@ -5,5 +5,10 @@ you can send a ref to refers to the input of the component
 
 ```jsx
 import QuantityInput from './QuantityInput';
-<QuantityInput />;
+
+const handle = i => {
+  console.log(i);
+};
+
+<QuantityInput handleAccept={handle} />;
 ```

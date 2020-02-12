@@ -48,7 +48,7 @@ const QuantityInput = React.forwardRef(
 
         <button
           type='button'
-          onClick={() => handleAccept(value)}
+          onClick={() => handleAccept(parseInt(value))}
           ref={buttonRef}
           className='quantity-input_button'
           disabled={value === ''} // If value is empty disable the button

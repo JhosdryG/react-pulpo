@@ -61,6 +61,7 @@ const StyleSelectFilter = styled.div.attrs(props => {
     padding: ${p => p.style.inputPadding};
     font-size: ${p => p.style.inputFontSize};
     color: ${p => p.style.inputColor};
+    width: 100%;
     border: none;
     border-top: ${p => p.style.inputBorderTop};
     border-left: ${p => p.style.inputBorderLeft};
@@ -76,13 +77,14 @@ const StyleSelectFilter = styled.div.attrs(props => {
   & .filter {
     position: relative;
     box-sizing: border-box;
+    width: 100%;
 
     & > ul {
       box-sizing: border-box;
       position: absolute;
       top: -20px;
       left: 0;
-      width: ${p => p.style.divWidth};
+      width: 100%;
       list-style: none;
       margin: 0;
       padding: 0;
@@ -100,6 +102,7 @@ const StyleSelectFilter = styled.div.attrs(props => {
         padding: ${p => p.style.itemPadding};
         background-color: ${p => p.style.itemBackground};
         color: ${p => p.style.itemColor};
+        width: 100%;
         ${p => p.style.itemOthers}
 
         &:first-child {

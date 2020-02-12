@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-const DataTable = ({ data, properties, deleteRow, updateRow }) => {
+const DataTable = ({ data, properties, deleteRow, updateRow, onClickRow }) => {
   return (
     <div className='div-data-table'>
       <table className='data-table'>
@@ -33,6 +33,7 @@ const DataTable = ({ data, properties, deleteRow, updateRow }) => {
               row={row}
               deleteRow={deleteRow || null}
               updateRow={updateRow || null}
+              onClickRow={onClickRow}
             />
           ))}
         </tbody>
@@ -46,13 +47,14 @@ DataTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   properties: PropTypes.arrayOf(PropTypes.string).isRequired,
   deleteRow: PropTypes.func,
-  updateRow: PropTypes.func
+  updateRow: PropTypes.func,
+  onClickRow: PropTypes.func
 };
 
 const TableData = React.memo(
-  ({ row, deleteRow, updateRow }) => {
+  ({ row, deleteRow, updateRow, onClickRow }) => {
     return (
-      <tr>
+      <tr onClick={() => onClickRow(row.id)}>
         {/* Will create a COLUMN for every property of the row */}
         {Object.keys(row).map((property, i) => {
           if (property === 'id') return null;

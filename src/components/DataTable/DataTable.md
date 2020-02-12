@@ -127,12 +127,17 @@ const add = () => {
   ]);
 };
 
+const onClickRow = id => {
+  console.log(id);
+};
+
 <>
   <DataTable
     data={data}
     properties={['name', 'lastName', 'age']}
     deleteRow={handleDelete}
     updateRow={handleUpdate}
+    onClickRow={onClickRow}
   />
   <button onClick={jhoseph}>Jhoseph</button>
   <button onClick={add}>Add</button>
