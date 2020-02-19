@@ -23,6 +23,7 @@ const StyleSelectFilter = styled.div.attrs(props => {
     inputOutline: style.inputOutline || '#66d0dd auto 3px',
     inputBackground: style.inputBackground || 'fff',
     inputShadow: style.inputShadow || '0 0 5px rgba(0,0,0,.3)',
+    inputPlaceHolder: style.inputPlaceHolder || 'auto',
     inputOthers: style.inputOthers || '',
 
     /*List Styles*/
@@ -58,6 +59,7 @@ const StyleSelectFilter = styled.div.attrs(props => {
   font-family: ${p => p.style.divFont};
 
   & > [type='text'] {
+    box-sizing: border-box;
     padding: ${p => p.style.inputPadding};
     font-size: ${p => p.style.inputFontSize};
     color: ${p => p.style.inputColor};
@@ -70,14 +72,30 @@ const StyleSelectFilter = styled.div.attrs(props => {
     outline: ${p => p.style.inputOutline};
     background-color: ${p => p.style.inputBackground};
     box-shadow: ${p => p.style.inputShadow};
-    z-index: 2001;
+    z-index: 2;
     ${p => p.style.inputOthers};
+
+    &::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: ${p => p.style.inputPlaceHolder};
+      opacity: 1; /* Firefox */
+    }
+
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: ${p => p.style.inputPlaceHolder};
+    }
+
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: ${p => p.style.inputPlaceHolder};
+    }
   }
 
   & .filter {
     position: relative;
-    box-sizing: border-box;
     width: 100%;
+    box-sizing: border-box;
 
     & > ul {
       box-sizing: border-box;
@@ -94,10 +112,11 @@ const StyleSelectFilter = styled.div.attrs(props => {
       border-radius: ${p => p.style.listBorderRound};
       box-shadow: ${p => p.style.inputShadow};
       overflow: auto;
-      z-index: 1000;
+      z-index: 1;
       ${p => p.style.listOthers};
 
       & > li {
+        box-sizing: border-box;
         cursor: pointer;
         padding: ${p => p.style.itemPadding};
         background-color: ${p => p.style.itemBackground};
@@ -124,6 +143,8 @@ const StyleSelectFilter = styled.div.attrs(props => {
       }
 
       & > .no-match {
+        box-sizing: border-box;
+        width: 100%;
         color: ${p => p.style.noMatchColor};
         ${p => p.style.noMatchOthers}
       }
@@ -242,6 +263,7 @@ const SelectFilter = React.forwardRef(
         !hasSelected
       ) {
         //Key down
+        e.preventDefault();
         setCurrentItem(p => p + 1);
         // Moves scroll down with keyboard
         document
@@ -281,7 +303,6 @@ const SelectFilter = React.forwardRef(
     const handleOnSelect = i => {
       if (filteredList[i]) {
         if (!filteredList[i].disable) {
-          delete filteredList[i]['disable'];
           onSelect(filteredList[i]);
           setValue(filteredList[i][filter]);
           setFilteredList([]);

@@ -33,7 +33,7 @@ const DataTable = ({ data, properties, deleteRow, updateRow, onClickRow }) => {
               row={row}
               deleteRow={deleteRow || null}
               updateRow={updateRow || null}
-              onClickRow={onClickRow}
+              onClickRow={onClickRow || null}
             />
           ))}
         </tbody>
@@ -54,11 +54,15 @@ DataTable.propTypes = {
 const TableData = React.memo(
   ({ row, deleteRow, updateRow, onClickRow }) => {
     return (
-      <tr onClick={() => onClickRow(row.id)}>
+      <tr>
         {/* Will create a COLUMN for every property of the row */}
         {Object.keys(row).map((property, i) => {
           if (property === 'id') return null;
-          return <td key={i}>{row[property]}</td>;
+          return (
+            <td key={i} onClick={onClickRow ? () => onClickRow(row.id) : null}>
+              {row[property]}
+            </td>
+          );
         })}
 
         {/* Create delete button of the row if optios is available. returns id */}

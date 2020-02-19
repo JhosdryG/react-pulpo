@@ -107,5 +107,6 @@ const disableFunc = item => item.id % 2 === 0;
   onChange={handleChange}
   placeholder='Ingrese nombre'
   disableFunc={disableFunc}
+  style={{ inputPlaceHolder: 'red' }}
 />;
 ```

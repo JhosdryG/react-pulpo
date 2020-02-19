@@ -2,7 +2,16 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const QuantityInput = React.forwardRef(
-  ({ maxNumber, minNumber, handleAccept, labelText, buttonText }, ref) => {
+  (
+    {
+      maxNumber = 100,
+      minNumber = 1,
+      handleAccept,
+      labelText = 'Cantidad',
+      buttonText = 'Añadir'
+    },
+    ref
+  ) => {
     // State
     const [relase, setRelase] = useState(false);
     const [value, setValue] = useState('');
@@ -33,6 +42,8 @@ const QuantityInput = React.forwardRef(
       }
     };
 
+    const onChange = () => {};
+
     return (
       <div className='quantity-input'>
         <label htmlFor='quantity'>
@@ -43,6 +54,7 @@ const QuantityInput = React.forwardRef(
             ref={ref}
             onKeyDown={handleKeyDown}
             value={value}
+            onChange={onChange}
           />
         </label>
 
@@ -61,12 +73,7 @@ const QuantityInput = React.forwardRef(
 );
 
 QuantityInput.displayName = 'QuantityInput';
-QuantityInput.defaultProps = {
-  minNumber: 1,
-  maxNumber: 100,
-  labelText: 'Cantidad',
-  buttonText: 'Añadir'
-};
+
 QuantityInput.propTypes = {
   minNumber: PropTypes.number,
   maxNumber: PropTypes.number,
