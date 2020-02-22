@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const DataTable = ({ data, properties, deleteRow, updateRow, onClickRow }) => {
+  // State to determinate which row is currently selected
+  const [currentRow, setCurrentRow] = useState(null);
+
+  // Send function to each row to be executed when clicked if onClickRow is set
+  const handleClick = (id, index) => {
+    if (onClickRow) {
+      onClickRow(id);
+      setCurrentRow(index);
+    }
+  };
+
   return (
     <div className='div-data-table'>
       <table className='data-table'>
@@ -27,13 +38,15 @@ const DataTable = ({ data, properties, deleteRow, updateRow, onClickRow }) => {
         {/* Body */}
         <tbody>
           {/* Will create a ROW for every object in data */}
-          {data.map(row => (
+          {data.map((row, i) => (
             <TableData
               key={row.id}
               row={row}
+              index={i}
+              current={i === currentRow}
               deleteRow={deleteRow || null}
               updateRow={updateRow || null}
-              onClickRow={onClickRow || null}
+              onClickRow={onClickRow ? handleClick : null}
             />
           ))}
         </tbody>
@@ -52,14 +65,17 @@ DataTable.propTypes = {
 };
 
 const TableData = React.memo(
-  ({ row, deleteRow, updateRow, onClickRow }) => {
+  ({ row, deleteRow, updateRow, onClickRow, index, current }) => {
     return (
-      <tr>
+      <tr className={current ? 'current-row' : null}>
         {/* Will create a COLUMN for every property of the row */}
         {Object.keys(row).map((property, i) => {
           if (property === 'id') return null;
           return (
-            <td key={i} onClick={onClickRow ? () => onClickRow(row.id) : null}>
+            <td
+              key={i}
+              onClick={onClickRow ? () => onClickRow(row.id, index) : null}
+            >
               {row[property]}
             </td>
           );
@@ -83,6 +99,7 @@ const TableData = React.memo(
   },
   (pp, np) => {
     let render = true;
+    if (pp.current !== np.current) return false;
     Object.keys(pp['row']).forEach(key => {
       //console.log(np[key]);
 
